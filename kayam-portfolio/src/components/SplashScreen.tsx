@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Brain, Server, Cloud, Cpu, Database, Network, Zap, Atom } from "lucide-react";
 
 const SplashScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -12,128 +11,228 @@ const SplashScreen = () => {
       setIsVisible(false);
       // Redirect to portfolio selector after splash screen
       navigate("/selector");
-    }, 4000); // Show splash screen for 4 seconds
+    }, 5000); // Show splash screen for 5 seconds
 
     return () => clearTimeout(timer);
   }, [navigate]);
 
   if (!isVisible) return null;
 
-  const techElements = [
-    { icon: Brain, label: "Neural Networks", delay: 0 },
-    { icon: Server, label: "Data Centers", delay: 0.2 },
-    { icon: Cloud, label: "Cloud Computing", delay: 0.4 },
-    { icon: Cpu, label: "Virtualization", delay: 0.6 },
-    { icon: Database, label: "Big Data", delay: 0.8 },
-    { icon: Network, label: "LLMs", delay: 1.0 },
-    { icon: Atom, label: "Quantum AI", delay: 1.2 },
-    { icon: Zap, label: "Edge Computing", delay: 1.4 },
-  ];
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 overflow-hidden">
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full opacity-20"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-            }}
-            animate={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          />
-        ))}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black overflow-hidden">
+      {/* Animated background grid */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900" />
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)`
+        }} />
       </div>
 
-      {/* Central animated logo */}
+      {/* Central animated logo with data flow */}
       <motion.div
         className="relative z-10 flex flex-col items-center"
-        initial={{ scale: 0.5, opacity: 0 }}
+        initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
       >
-        <motion.div
-          className="relative w-32 h-32 mb-8"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 blur-xl opacity-30" />
-          <div className="absolute inset-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
-            <Brain className="w-12 h-12 text-white" />
-          </div>
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-cyan-400"
-            animate={{ scale: [1, 1.2, 1], opacity: [0.7, 0.3, 0.7] }}
-            transition={{ duration: 2, repeat: Infinity }}
+        {/* Data center visualization */}
+        <div className="relative w-48 h-48 mb-10">
+          {/* Outer ring */}
+          <motion.div 
+            className="absolute inset-0 rounded-full border-2 border-cyan-400 opacity-30"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />
-        </motion.div>
+          
+          {/* Middle ring */}
+          <motion.div 
+            className="absolute inset-4 rounded-full border border-blue-400 opacity-50"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          />
+          
+          {/* Inner core */}
+          <div className="absolute inset-8 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/50">
+            <div className="w-16 h-16 rounded-lg bg-black/30 flex items-center justify-center border border-cyan-300">
+              <div className="grid grid-cols-2 gap-1">
+                {[...Array(4)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="w-2 h-2 bg-cyan-300 rounded-full"
+                    animate={{
+                      opacity: [0.3, 1, 0.3],
+                      scale: [0.8, 1.2, 0.8]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      delay: i * 0.2
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* Data flow particles */}
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 rounded-full bg-cyan-400"
+              style={{
+                top: '50%',
+                left: '50%',
+              }}
+              animate={{
+                x: [0, Math.cos((i * 30 * Math.PI) / 180) * 80],
+                y: [0, Math.sin((i * 30 * Math.PI) / 180) * 80],
+                opacity: [1, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: i * 0.1,
+                ease: "easeOut"
+              }}
+            />
+          ))}
+        </div>
 
         <motion.h1
-          className="text-4xl md:text-5xl font-bold text-white font-orbitron text-center mb-2"
-          initial={{ y: 20, opacity: 0 }}
+          className="text-4xl md:text-6xl font-bold text-white font-orbitron text-center mb-4 tracking-wider"
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          transition={{ delay: 0.5, duration: 1 }}
         >
-          KAYAM AI PORTFOLIO
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+            KAYAM AI
+          </span>
         </motion.h1>
 
         <motion.p
-          className="text-lg text-cyan-200 font-light tracking-wider"
-          initial={{ y: 20, opacity: 0 }}
+          className="text-xl text-gray-300 font-light tracking-widest mb-2"
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
+          transition={{ delay: 0.8, duration: 1 }}
         >
-          ENTERING THE FUTURE OF AI
+          PORTFOLIO
         </motion.p>
+        
+        <motion.div 
+          className="flex items-center text-cyan-300 text-sm mt-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+        >
+          <span>ENTERING THE FUTURE OF AI</span>
+          <motion.div 
+            className="ml-2 w-2 h-2 bg-cyan-400 rounded-full"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.5, 1, 0.5]
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity
+            }}
+          />
+        </motion.div>
       </motion.div>
 
-      {/* Tech elements floating around */}
-      {techElements.map((item, index) => (
+      {/* Floating tech elements with realistic representations */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Cloud computing visualization */}
         <motion.div
-          key={item.label}
-          className="absolute text-cyan-300 opacity-70"
-          initial={{ 
-            x: Math.random() * window.innerWidth, 
-            y: Math.random() * window.innerHeight,
-            opacity: 0
+          className="absolute top-1/4 left-1/4 w-16 h-16 opacity-20"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0]
           }}
-          animate={{ 
-            y: [null, -20, 0],
-            opacity: [0, 0.7, 0.7]
-          }}
-          transition={{ 
-            duration: 2, 
-            delay: item.delay,
+          transition={{
+            duration: 8,
             repeat: Infinity,
-            repeatType: "reverse"
+            ease: "easeInOut"
           }}
         >
-          <item.icon className="w-8 h-8" />
+          <div className="flex flex-col space-y-2">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex space-x-2">
+                {[...Array(3)].map((_, j) => (
+                  <div key={j} className="w-3 h-3 rounded-sm bg-white" />
+                ))}
+              </div>
+            ))}
+          </div>
         </motion.div>
-      ))}
 
-      {/* Progress bar */}
+        {/* Neural network visualization */}
+        <motion.div
+          className="absolute bottom-1/3 right-1/4 w-24 h-24 opacity-20"
+          animate={{
+            rotate: 360
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            {[...Array(8)].map((_, i) => (
+              <circle
+                key={i}
+                cx={50 + 30 * Math.cos((i * 45 * Math.PI) / 180)}
+                cy={50 + 30 * Math.sin((i * 45 * Math.PI) / 180)}
+                r="4"
+                fill="#22d3ee"
+              />
+            ))}
+            {[...Array(8)].map((_, i) => (
+              [...Array(8)].map((_, j) => (
+                i !== j && Math.random() > 0.7 && (
+                  <line
+                    key={`${i}-${j}`}
+                    x1={50 + 30 * Math.cos((i * 45 * Math.PI) / 180)}
+                    y1={50 + 30 * Math.sin((i * 45 * Math.PI) / 180)}
+                    x2={50 + 30 * Math.cos((j * 45 * Math.PI) / 180)}
+                    y2={50 + 30 * Math.sin((j * 45 * Math.PI) / 180)}
+                    stroke="#22d3ee"
+                    strokeWidth="0.5"
+                    opacity="0.5"
+                  />
+                )
+              ))
+            ))}
+          </svg>
+        </motion.div>
+
+        {/* Data flow visualization */}
+        <motion.div
+          className="absolute top-1/3 right-1/3 w-32 h-1 bg-cyan-400 rounded-full opacity-30"
+          animate={{
+            scaleX: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity
+          }}
+        />
+      </div>
+
+      {/* Progress bar with tech style */}
       <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-64 h-1 bg-gray-700 rounded-full overflow-hidden"
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-80 h-1.5 bg-gray-800 rounded-full overflow-hidden"
         initial={{ width: 0 }}
-        animate={{ width: "16rem" }}
-        transition={{ duration: 4, ease: "easeInOut" }}
+        animate={{ width: "20rem" }}
+        transition={{ duration: 5, ease: "easeInOut" }}
       >
         <motion.div
-          className="h-full bg-gradient-to-r from-cyan-400 to-blue-500"
+          className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
-          transition={{ duration: 4, ease: "easeInOut" }}
+          transition={{ duration: 5, ease: "easeInOut" }}
         />
       </motion.div>
     </div>
