@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/assets/projects-documentation/*.md"
+  [headers.values]
+    Content-Type = "text/markdown"
+
+[[headers]]
+  for = "/assets/projects-documentation-pdf/*.pdf"
+  [headers.values]
+    Content-Type = "application/pdf"
+
+[[redirects]]
+  from = "/src/assets/projects-documentation/*"
+  to = "/assets/projects-documentation/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/src/assets/projects-documentation-pdf/*"
+  to = "/assets/projects-documentation-pdf/:splat"
+  status = 200
