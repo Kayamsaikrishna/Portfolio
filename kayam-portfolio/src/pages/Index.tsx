@@ -1,25 +1,22 @@
-import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Projects from "@/components/Projects";
-import Experience from "@/components/Experience";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import SplashScreen from "@/components/SplashScreen";
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // After 4 seconds, redirect to portfolio selector
+    const timer = setTimeout(() => {
+      navigate("/selector");
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   return (
     <div className="min-h-screen">
-      <Navigation />
-      <main>
-        <section id="home">
-          <Hero />
-        </section>
-        <About />
-        <Projects />
-        <Experience />
-        <Contact />
-      </main>
-      <Footer />
+      <SplashScreen />
     </div>
   );
 };
